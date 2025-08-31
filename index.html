@@ -3,961 +3,1926 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>神岛代码岛 - 个人主页</title>
-    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;500;700&family=Rajdhani:wght@300;400;500&display=swap" rel="stylesheet">
+    <title>TechSpace | 技术交流与工具平台</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap">
     <style>
+        :root {
+            --primary-color: #00B4B3;
+            --primary-light: #5FE3E2;
+            --primary-dark: #008887;
+            --text-color: #333333;
+            --text-light: #777777;
+            --bg-color: #FFFFFF;
+            --bg-light: #F5F9FA;
+            --border-color: #E0F0F0;
+            --card-shadow: 0 5px 15px rgba(0, 180, 179, 0.1);
+            --transition: all 0.3s ease;
+        }
+
+        @media (prefers-color-scheme: dark) {
+            :root {
+                --text-color: #EEEEEE;
+                --text-light: #AAAAAA;
+                --bg-color: #1A1A1A;
+                --bg-light: #252525;
+                --border-color: #334444;
+            }
+        }
+
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
-            font-family: 'Rajdhani', 'Orbitron', sans-serif;
+            font-family: 'Roboto', sans-serif;
         }
-        
-        :root {
-            --dao-primary: #6e45e2;
-            --dao-secondary: #88d3ce;
-            --dao-accent: #ff7e5f;
-            --dark-bg: #0f1126;
-            --darker-bg: #090b1d;
-            --card-bg: #15182e;
-            --text-color: #ffffff;
-            --text-muted: #a0a7e0;
-        }
-        
+
         body {
-            background: linear-gradient(135deg, var(--darker-bg) 0%, var(--dark-bg) 70%);
+            background-color: var(--bg-color);
             color: var(--text-color);
-            min-height: 100vh;
-            overflow-x: hidden;
             line-height: 1.6;
-        }
-        
-        /* 扫描线效果 */
-        body::after {
-            content: '';
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: repeating-linear-gradient(
-                0deg,
-                rgba(0, 0, 0, 0.15),
-                rgba(0, 0, 0, 0.15) 1px,
-                transparent 1px,
-                transparent 2px
-            );
-            pointer-events: none;
-            z-index: 100;
-            opacity: 0.3;
-        }
-        
-        /* 容器样式 */
-        .container {
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 0 20px;
+            overflow-x: hidden;
             position: relative;
-            z-index: 2;
+            min-height: 100vh;
         }
-        
-        /* 导航栏样式 */
-        header {
-            padding: 20px 0;
-            position: relative;
-            border-bottom: 1px solid rgba(var(--dao-primary), 0.2);
-        }
-        
-        .nav-container {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
-        
-        /* 神岛代码岛标志 */
-        .dao-logo {
-            display: flex;
-            align-items: center;
-            text-decoration: none;
-            color: var(--text-color);
-        }
-        
-        .logo-icon {
-            width: 40px;
-            height: 40px;
-            background: linear-gradient(135deg, var(--dao-primary), var(--dao-secondary));
-            border-radius: 10px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            margin-right: 10px;
-            font-size: 20px;
-        }
-        
-        .logo-text {
-            font-family: 'Orbitron', sans-serif;
-            font-weight: 700;
-            font-size: 1.5rem;
-            background: linear-gradient(135deg, var(--dao-primary), var(--dao-secondary));
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-        }
-        
-        /* 时间显示 */
-        .time-display {
-            font-family: 'Orbitron', sans-serif;
-            font-size: 1.2rem;
-            background: rgba(0, 0, 0, 0.3);
-            padding: 8px 15px;
-            border-radius: 20px;
-            border: 1px solid var(--dao-primary);
-            box-shadow: 0 0 10px rgba(110, 69, 226, 0.5);
-        }
-        
-        /* 头像样式 - 左上角位置 */
-        .avatar-container {
-            position: relative;
-            width: 80px;
-            height: 80px;
-            border-radius: 50%;
-            overflow: hidden;
-            border: 2px solid var(--dao-primary);
-            box-shadow: 0 0 15px var(--dao-primary), 
-                        inset 0 0 15px var(--dao-primary);
-            animation: pulse 3s infinite alternate;
-        }
-        
-        .avatar-container img {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-            filter: sepia(60%) hue-rotate(200deg) saturate(140%);
-        }
-        
-        /* 导航菜单 */
-        .nav-menu {
-            display: flex;
-            list-style: none;
-        }
-        
-        .nav-menu li {
-            margin-left: 30px;
-        }
-        
-        .nav-menu a {
-            color: var(--text-color);
-            text-decoration: none;
-            font-weight: 500;
-            font-size: 18px;
-            text-transform: uppercase;
-            letter-spacing: 1px;
-            position: relative;
-            padding: 5px 0;
-            transition: color 0.3s;
-        }
-        
-        .nav-menu a:hover {
-            color: var(--dao-secondary);
-        }
-        
-        .nav-menu a::after {
-            content: '';
-            position: absolute;
-            bottom: 0;
-            left: 0;
-            width: 0;
-            height: 2px;
-            background: var(--dao-secondary);
-            transition: width 0.3s ease;
-        }
-        
-        .nav-menu a:hover::after {
-            width: 100%;
-        }
-        
-        /* 主区域样式 */
-        .hero {
-            padding: 100px 0;
-            text-align: center;
-            position: relative;
-        }
-        
-        .hero h1 {
-            font-family: 'Orbitron', sans-serif;
-            font-size: 4rem;
-            margin-bottom: 20px;
-            text-transform: uppercase;
-            letter-spacing: 3px;
-            background: linear-gradient(135deg, var(--dao-primary), var(--dao-secondary), var(--dao-accent));
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            animation: glow 2s ease-in-out infinite alternate;
-        }
-        
-        .hero p {
-            font-size: 1.5rem;
-            max-width: 700px;
-            margin: 0 auto 40px;
-            color: var(--text-muted);
-        }
-        
-        /* 神岛风格按钮 */
-        .dao-button {
-            font-family: 'Orbitron', sans-serif;
-            display: inline-block;
-            padding: 15px 40px;
-            background: linear-gradient(135deg, var(--dao-primary), var(--dao-secondary));
-            border: none;
-            color: white;
-            font-size: 1.2rem;
-            letter-spacing: 3px;
-            text-transform: uppercase;
-            cursor: pointer;
-            position: relative;
-            box-shadow: 0 0 15px rgba(110, 69, 226, 0.5);
-            margin: 20px 10px;
-            border-radius: 30px;
-            transition: all 0.3s ease;
-            overflow: hidden;
-        }
-        
-        .dao-button:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 0 25px rgba(110, 69, 226, 0.8);
-        }
-        
-        .dao-button::after {
-            content: '';
-            position: absolute;
-            top: -50%;
-            left: -50%;
-            width: 200%;
-            height: 200%;
-            background: linear-gradient(rgba(255,255,255,0.2), rgba(255,255,255,0));
-            transform: rotate(30deg);
-            transition: all 0.3s;
-        }
-        
-        .dao-button:hover::after {
-            transform: rotate(30deg) translate(10%, 10%);
-        }
-        
-        /* 内容区域样式 */
-        .section-title {
-            font-family: 'Orbitron', sans-serif;
-            font-size: 2.5rem;
-            margin: 60px 0 40px;
-            text-align: center;
-            text-transform: uppercase;
-            letter-spacing: 2px;
-            position: relative;
-            padding-bottom: 15px;
-            color: var(--dao-secondary);
-        }
-        
-        .section-title::after {
-            content: '';
-            position: absolute;
-            bottom: 0;
-            left: 50%;
-            transform: translateX(-50%);
-            width: 100px;
-            height: 3px;
-            background: linear-gradient(90deg, var(--dao-primary), var(--dao-secondary));
-        }
-        
-        /* 关于我区域 */
-        .about-content {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 50px;
-            align-items: center;
-        }
-        
-        .about-text {
-            padding-right: 20px;
-        }
-        
-        .about-text p {
-            margin-bottom: 20px;
-            font-size: 1.1rem;
-            color: var(--text-muted);
-        }
-        
-        .skills-container {
-            display: grid;
-            grid-template-columns: repeat(2, 1fr);
-            gap: 20px;
-        }
-        
-        .skill {
-            margin-bottom: 20px;
-        }
-        
-        .skill-name {
-            display: flex;
-            justify-content: space-between;
-            margin-bottom: 5px;
-            color: var(--dao-secondary);
-        }
-        
-        .skill-bar {
-            height: 10px;
-            background: rgba(255, 255, 255, 0.1);
-            border-radius: 5px;
-            overflow: hidden;
-        }
-        
-        .skill-level {
-            height: 100%;
-            background: linear-gradient(90deg, var(--dao-primary), var(--dao-secondary));
-            border-radius: 5px;
-            position: relative;
-        }
-        
-        .skill-level::after {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.4), transparent);
-            animation: shine 2s infinite;
-        }
-        
-        /* 项目展示 */
-        .projects-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-            gap: 30px;
-            margin-top: 40px;
-        }
-        
-        .project-card {
-            background: var(--card-bg);
-            border: 1px solid rgba(var(--dao-primary), 0.3);
-            border-radius: 15px;
-            overflow: hidden;
-            transition: transform 0.3s ease, box-shadow 0.3s ease;
-            position: relative;
-        }
-        
-        .project-card:hover {
-            transform: translateY(-10px);
-            box-shadow: 0 0 25px var(--dao-primary);
-        }
-        
-        .project-img {
-            width: 100%;
-            height: 200px;
-            background: linear-gradient(45deg, #1a1c3d, #2d1959);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            overflow: hidden;
-        }
-        
-        .project-img i {
-            font-size: 4rem;
-            color: var(--dao-primary);
-        }
-        
-        .project-content {
-            padding: 20px;
-        }
-        
-        .project-title {
-            font-family: 'Orbitron', sans-serif;
-            font-size: 1.5rem;
-            margin-bottom: 10px;
-            color: var(--dao-secondary);
-        }
-        
-        .project-desc {
-            margin-bottom: 20px;
-            color: var(--text-muted);
-        }
-        
-        .project-tech {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 10px;
-            margin-bottom: 20px;
-        }
-        
-        .tech-tag {
-            padding: 5px 10px;
-            background: rgba(var(--dao-primary), 0.2);
-            border: 1px solid var(--dao-primary);
-            border-radius: 15px;
-            font-size: 0.8rem;
-            color: var(--dao-secondary);
-        }
-        
-        /* 留言区样式 */
-        .message-board {
-            background: var(--card-bg);
-            border-radius: 15px;
-            padding: 30px;
-            margin: 50px 0;
-            border: 1px solid rgba(var(--dao-primary), 0.3);
-        }
-        
-        .message-form {
-            margin-bottom: 30px;
-        }
-        
-        .form-group {
-            margin-bottom: 20px;
-        }
-        
-        .form-group label {
-            display: block;
-            margin-bottom: 8px;
-            color: var(--dao-secondary);
-        }
-        
-        .form-control {
-            width: 100%;
-            padding: 12px 15px;
-            background: rgba(10, 10, 20, 0.7);
-            border: 1px solid rgba(var(--dao-primary), 0.3);
-            border-radius: 8px;
-            color: white;
-            font-size: 1rem;
-            transition: border-color 0.3s;
-        }
-        
-        .form-control:focus {
-            outline: none;
-            border-color: var(--dao-primary);
-            box-shadow: 0 0 10px rgba(110, 69, 226, 0.5);
-        }
-        
-        textarea.form-control {
-            min-height: 120px;
-            resize: vertical;
-        }
-        
-        .messages-container {
-            max-height: 500px;
-            overflow-y: auto;
-            padding-right: 10px;
-        }
-        
-        .message {
-            background: rgba(20, 20, 40, 0.5);
-            border-left: 3px solid var(--dao-primary);
-            border-radius: 5px;
-            padding: 15px;
-            margin-bottom: 15px;
-        }
-        
-        .message-header {
-            display: flex;
-            justify-content: space-between;
-            margin-bottom: 10px;
-            color: var(--dao-secondary);
-        }
-        
-        .message-author {
-            font-weight: bold;
-        }
-        
-        .message-date {
-            font-size: 0.9rem;
-            color: var(--text-muted);
-        }
-        
-        .message-content {
-            color: var(--text-muted);
-        }
-        
-        /* 页脚样式 */
-        footer {
-            text-align: center;
-            padding: 40px 0;
-            margin-top: 80px;
-            border-top: 1px solid rgba(var(--dao-primary), 0.2);
-            position: relative;
-        }
-        
-        .social-links {
-            display: flex;
-            justify-content: center;
-            gap: 20px;
-            margin-bottom: 20px;
-        }
-        
-        .social-link {
-            width: 50px;
-            height: 50px;
-            border: 1px solid var(--dao-primary);
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            color: var(--dao-primary);
-            font-size: 1.2rem;
-            text-decoration: none;
-            transition: all 0.3s ease;
-        }
-        
-        .social-link:hover {
-            background: var(--dao-primary);
-            color: var(--dark-bg);
-            box-shadow: 0 0 15px var(--dao-primary);
-        }
-        
-        .copyright {
-            color: var(--text-muted);
-            font-size: 1rem;
-        }
-        
-        /* 动画效果 */
-        @keyframes glow {
-            from {
-                filter: drop-shadow(0 0 5px var(--dao-primary));
-            }
-            to {
-                filter: drop-shadow(0 0 20px var(--dao-primary));
-            }
-        }
-        
-        @keyframes pulse {
-            0% {
-                box-shadow: 0 0 15px var(--dao-primary), 
-                           inset 0 0 15px var(--dao-primary);
-            }
-            100% {
-                box-shadow: 0 0 25px var(--dao-primary), 
-                           inset 0 0 20px var(--dao-primary);
-            }
-        }
-        
-        @keyframes shine {
-            0% {
-                transform: translateX(-100%);
-            }
-            100% {
-                transform: translateX(100%);
-            }
-        }
-        
-        /* 响应式设计 */
-        @media (max-width: 992px) {
-            .about-content {
-                grid-template-columns: 1fr;
-            }
-            
-            .hero h1 {
-                font-size: 3rem;
-            }
-        }
-        
-        @media (max-width: 768px) {
-            .nav-container {
-                flex-direction: column;
-            }
-            
-            .avatar-container {
-                margin-bottom: 20px;
-            }
-            
-            .nav-menu {
-                width: 100%;
-                justify-content: center;
-                margin-top: 20px;
-            }
-            
-            .nav-menu li {
-                margin: 0 10px;
-            }
-            
-            .hero h1 {
-                font-size: 2.5rem;
-            }
-            
-            .hero p {
-                font-size: 1.2rem;
-            }
-            
-            .projects-grid {
-                grid-template-columns: 1fr;
-            }
-            
-            .time-display {
-                margin-top: 20px;
-                font-size: 1rem;
-            }
-        }
-        
-        /* 粒子背景容器 */
+
         #particles-js {
             position: fixed;
             width: 100%;
             height: 100%;
             top: 0;
             left: 0;
-            z-index: 1;
+            z-index: -1;
+            pointer-events: none;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        /* 登录/注册模态框 */
+        .auth-modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.7);
+            z-index: 1000;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .auth-content {
+            background-color: var(--bg-color);
+            border-radius: 12px;
+            width: 90%;
+            max-width: 400px;
+            padding: 30px;
+            box-shadow: 0 5px 25px rgba(0, 0, 0, 0.2);
+            position: relative;
+        }
+
+        .close-modal {
+            position: absolute;
+            top: 15px;
+            right: 15px;
+            font-size: 1.5rem;
+            cursor: pointer;
+            color: var(--text-light);
+        }
+
+        .auth-tabs {
+            display: flex;
+            margin-bottom: 20px;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .auth-tab {
+            padding: 10px 20px;
+            cursor: pointer;
+            font-weight: 500;
+        }
+
+        .auth-tab.active {
+            color: var(--primary-color);
+            border-bottom: 2px solid var(--primary-color);
+        }
+
+        .auth-form {
+            display: none;
+        }
+
+        .auth-form.active {
+            display: block;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 500;
+        }
+
+        .form-group input {
+            width: 100%;
+            padding: 12px 15px;
+            border: 1px solid var(--border-color);
+            border-radius: 6px;
+            background-color: var(--bg-light);
+            color: var(--text-color);
+            transition: var(--transition);
+        }
+
+        .form-group input:focus {
+            border-color: var(--primary-color);
+            outline: none;
+            box-shadow: 0 0 0 2px rgba(0, 180, 179, 0.2);
+        }
+
+        .auth-btn {
+            width: 100%;
+            padding: 12px;
+            background-color: var(--primary-color);
+            color: white;
+            border: none;
+            border-radius: 6px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: var(--transition);
+        }
+
+        .auth-btn:hover {
+            background-color: var(--primary-dark);
+        }
+
+        /* 导航栏样式 */
+        header {
+            background-color: var(--bg-color);
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+            position: fixed;
+            width: 100%;
+            top: 0;
+            z-index: 100;
+        }
+
+        nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 15px 0;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            font-weight: 700;
+            font-size: 1.5rem;
+            color: var(--primary-color);
+        }
+
+        .logo i {
+            margin-right: 8px;
+        }
+
+        .nav-links {
+            display: flex;
+            list-style: none;
+        }
+
+        .nav-links li {
+            margin-left: 25px;
+        }
+
+        .nav-links a {
+            color: var(--text-color);
+            font-weight: 500;
+            position: relative;
+            padding: 5px 0;
+        }
+
+        .nav-links a:hover {
+            color: var(--primary-color);
+        }
+
+        .nav-links a::after {
+            content: '';
+            position: absolute;
+            width: 0;
+            height: 2px;
+            bottom: 0;
+            left: 0;
+            background-color: var(--primary-color);
+            transition: var(--transition);
+        }
+
+        .nav-links a:hover::after {
+            width: 100%;
+        }
+
+        .nav-buttons {
+            display: flex;
+            align-items: center;
+        }
+
+        .menu-toggle {
+            display: none;
+            flex-direction: column;
+            justify-content: space-around;
+            width: 30px;
+            height: 25px;
+            background: transparent;
+            border: none;
+            cursor: pointer;
+            padding: 0;
+            margin-left: 20px;
+        }
+
+        .menu-toggle span {
+            width: 100%;
+            height: 3px;
+            background-color: var(--text-color);
+            border-radius: 3px;
+            transition: var(--transition);
+        }
+
+        .dropdown-menu {
+            display: none;
+            position: absolute;
+            top: 100%;
+            right: 20px;
+            background-color: var(--bg-color);
+            border-radius: 8px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            width: 200px;
+            padding: 10px 0;
+            z-index: 100;
+        }
+
+        .dropdown-menu.active {
+            display: block;
+            animation: fadeIn 0.3s ease;
+        }
+
+        .dropdown-menu a {
+            display: block;
+            padding: 10px 20px;
+            color: var(--text-color);
+            transition: var(--transition);
+        }
+
+        .dropdown-menu a:hover {
+            background-color: var(--bg-light);
+            color: var(--primary-color);
+        }
+
+        .btn-login {
+            padding: 8px 16px;
+            background-color: transparent;
+            color: var(--primary-color);
+            border: 1px solid var(--primary-color);
+            border-radius: 6px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: var(--transition);
+            margin-left: 15px;
+        }
+
+        .btn-login:hover {
+            background-color: var(--primary-color);
+            color: white;
+        }
+
+        .user-menu {
+            display: flex;
+            align-items: center;
+            position: relative;
+            cursor: pointer;
+        }
+
+        .user-avatar {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 2px solid var(--primary-light);
+            margin-right: 10px;
+        }
+
+        .user-dropdown {
+            display: none;
+            position: absolute;
+            top: 100%;
+            right: 0;
+            background-color: var(--bg-color);
+            border-radius: 8px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            width: 200px;
+            padding: 10px 0;
+            z-index: 100;
+            margin-top: 10px;
+        }
+
+        .user-dropdown.active {
+            display: block;
+            animation: fadeIn 0.3s ease;
+        }
+
+        .user-dropdown a {
+            display: block;
+            padding: 10px 20px;
+            color: var(--text-color);
+            transition: var(--transition);
+        }
+
+        .user-dropdown a:hover {
+            background-color: var(--bg-light);
+            color: var(--primary-color);
+        }
+
+        /* 主内容区样式 */
+        main {
+            margin-top: 80px;
+            min-height: calc(100vh - 180px);
+            padding: 20px 0 60px;
+        }
+
+        .section {
+            display: none;
+            padding: 30px 0;
+        }
+
+        .section.active {
+            display: block;
+            animation: fadeIn 0.5s ease;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .section-title {
+            text-align: center;
+            margin-bottom: 40px;
+            color: var(--primary-color);
+            position: relative;
+        }
+
+        .section-title::after {
+            content: '';
+            position: absolute;
+            width: 60px;
+            height: 3px;
+            background-color: var(--primary-color);
+            bottom: -10px;
+            left: 50%;
+            transform: translateX(-50%);
+        }
+
+        /* 主页英雄区域 */
+        .hero {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            padding: 40px 0;
+        }
+
+        .avatar {
+            width: 150px;
+            height: 150px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 4px solid var(--primary-light);
+            margin-bottom: 20px;
+            box-shadow: var(--card-shadow);
+        }
+
+        .hero h1 {
+            font-size: 2.5rem;
+            margin-bottom: 10px;
+        }
+
+        .hero p {
+            font-size: 1.2rem;
+            color: var(--text-light);
+            max-width: 700px;
+            margin: 0 auto 30px;
+        }
+
+        .social-links {
+            display: flex;
+            gap: 20px;
+        }
+
+        .social-links a {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            background-color: var(--bg-light);
+            color: var(--primary-color);
+            font-size: 1.5rem;
+            transition: var(--transition);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .social-links a:hover {
+            background-color: var(--primary-color);
+            color: white;
+            transform: translateY(-5px);
+            box-shadow: 0 5px 15px rgba(0, 180, 179, 0.4);
+        }
+
+        .social-links a:hover::before {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 150%;
+            height: 150%;
+            background: rgba(255, 255, 255, 0.2);
+            transform: translate(-50%, -50%) scale(0);
+            border-radius: 50%;
+            animation: pulse 1s ease-out;
+        }
+
+        @keyframes pulse {
+            0% {
+                transform: translate(-50%, -50%) scale(0);
+                opacity: 1;
+            }
+            100% {
+                transform: translate(-50%, -50%) scale(1);
+                opacity: 0;
+            }
+        }
+
+        /* 卡片网格布局 */
+        .card-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 25px;
+            margin-top: 30px;
+        }
+
+        .card {
+            background: var(--bg-light);
+            border-radius: 12px;
+            overflow: hidden;
+            transition: var(--transition);
+            border: 1px solid var(--border-color);
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .card:hover {
+            transform: translateY(-5px);
+            box-shadow: var(--card-shadow);
+        }
+
+        .card-header {
+            padding: 20px;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .card-title {
+            font-size: 1.3rem;
+            margin-bottom: 8px;
+            color: var(--primary-dark);
+            display: flex;
+            align-items: center;
+        }
+
+        .card-title i {
+            margin-right: 10px;
+        }
+
+        .card-body {
+            padding: 20px;
+            flex-grow: 1;
+        }
+
+        .card-footer {
+            padding: 15px 20px;
+            background-color: rgba(0, 180, 179, 0.05);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .btn {
+            display: inline-block;
+            padding: 8px 16px;
+            background-color: var(--primary-color);
+            color: white;
+            border-radius: 6px;
+            font-weight: 500;
+            transition: var(--transition);
+            border: none;
+            cursor: pointer;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .btn:hover {
+            background-color: var(--primary-dark);
+            color: white;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 8px rgba(0, 180, 179, 0.3);
+        }
+
+        .btn-outline {
+            background-color: transparent;
+            border: 1px solid var(--primary-color);
+            color: var(--primary-color);
+        }
+
+        .btn-outline:hover {
+            background-color: var(--primary-color);
+            color: white;
+        }
+
+        /* 论坛样式 */
+        .forum-actions {
+            display: flex;
+            justify-content: flex-end;
+            margin-bottom: 20px;
+        }
+
+        .forum-list {
+            list-style: none;
+        }
+
+        .forum-item {
+            padding: 20px;
+            border-bottom: 1px solid var(--border-color);
+            transition: var(--transition);
+        }
+
+        .forum-item:hover {
+            background-color: var(--bg-light);
+        }
+
+        .forum-title {
+            font-size: 1.2rem;
+            margin-bottom: 8px;
+        }
+
+        .forum-meta {
+            display: flex;
+            color: var(--text-light);
+            font-size: 0.9rem;
+        }
+
+        .forum-meta span {
+            margin-right: 15px;
+            display: flex;
+            align-items: center;
+        }
+
+        .forum-meta i {
+            margin-right: 5px;
+        }
+
+        /* 新建帖子模态框 */
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.7);
+            z-index: 1000;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+        }
+
+        .modal.active {
+            display: flex;
+        }
+
+        .modal-content {
+            background-color: var(--bg-color);
+            border-radius: 12px;
+            width: 100%;
+            max-width: 800px;
+            max-height: 90vh;
+            overflow-y: auto;
+            box-shadow: 0 5px 25px rgba(0, 0, 0, 0.2);
+        }
+
+        .modal-header {
+            padding: 20px;
+            border-bottom: 1px solid var(--border-color);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .modal-title {
+            font-size: 1.5rem;
+            color: var(--primary-color);
+        }
+
+        .modal-close {
+            font-size: 1.5rem;
+            cursor: pointer;
+            color: var(--text-light);
+        }
+
+        .modal-body {
+            padding: 20px;
+        }
+
+        .editor-toolbar {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin-bottom: 15px;
+            padding: 10px;
+            background-color: var(--bg-light);
+            border-radius: 6px;
+        }
+
+        .editor-toolbar select, .editor-toolbar button {
+            padding: 8px 12px;
+            background-color: var(--bg-color);
+            border: 1px solid var(--border-color);
+            border-radius: 4px;
+            color: var(--text-color);
+            cursor: pointer;
+        }
+
+        .editor-toolbar button {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 36px;
+            height: 36px;
+        }
+
+        .editor-toolbar select:focus, .editor-toolbar button:focus {
+            outline: none;
+            border-color: var(--primary-color);
+        }
+
+        .post-title {
+            width: 100%;
+            padding: 12px 15px;
+            margin-bottom: 15px;
+            border: 1px solid var(--border-color);
+            border-radius: 6px;
+            background-color: var(--bg-light);
+            color: var(--text-color);
+            font-size: 1.1rem;
+        }
+
+        .post-content {
+            width: 100%;
+            min-height: 300px;
+            padding: 15px;
+            border: 1px solid var(--border-color);
+            border-radius: 6px;
+            background-color: var(--bg-light);
+            color: var(--text-color);
+            resize: vertical;
+        }
+
+        .modal-footer {
+            padding: 15px 20px;
+            border-top: 1px solid var(--border-color);
+            display: flex;
+            justify-content: flex-end;
+            gap: 10px;
+        }
+
+        /* 帖子详情页 */
+        .post-detail {
+            background-color: var(--bg-light);
+            border-radius: 12px;
+            padding: 25px;
+            margin-bottom: 30px;
+            border: 1px solid var(--border-color);
+        }
+
+        .post-header {
+            margin-bottom: 20px;
+        }
+
+        .post-author {
+            display: flex;
+            align-items: center;
+            margin-bottom: 15px;
+        }
+
+        .post-author-avatar {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            object-fit: cover;
+            margin-right: 15px;
+            border: 2px solid var(--primary-light);
+        }
+
+        .post-author-info h3 {
+            margin-bottom: 5px;
+        }
+
+        .post-date {
+            color: var(--text-light);
+            font-size: 0.9rem;
+        }
+
+        .post-body {
+            line-height: 1.8;
+            margin-bottom: 20px;
+        }
+
+        .post-actions {
+            display: flex;
+            gap: 15px;
+        }
+
+        .comments-section {
+            margin-top: 40px;
+        }
+
+        .comment-form {
+            margin-bottom: 30px;
+        }
+
+        .comment-input {
+            width: 100%;
+            min-height: 100px;
+            padding: 15px;
+            border: 1px solid var(--border-color);
+            border-radius: 6px;
+            background-color: var(--bg-light);
+            color: var(--text-color);
+            resize: vertical;
+            margin-bottom: 15px;
+        }
+
+        .comments-list {
+            list-style: none;
+        }
+
+        .comment-item {
+            padding: 20px;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .comment-header {
+            display: flex;
+            align-items: center;
+            margin-bottom: 15px;
+        }
+
+        .comment-avatar {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            object-fit: cover;
+            margin-right: 15px;
+            border: 2px solid var(--primary-light);
+        }
+
+        .comment-author {
+            font-weight: 500;
+        }
+
+        .comment-date {
+            color: var(--text-light);
+            font-size: 0.8rem;
+            margin-left: 10px;
+        }
+
+        .comment-body {
+            line-height: 1.6;
+        }
+
+        /* 工具样式 */
+        .tool-item {
+            margin-bottom: 30px;
+            padding: 25px;
+            background: var(--bg-light);
+            border-radius: 12px;
+            border: 1px solid var(--border-color);
+        }
+
+        .tool-title {
+            font-size: 1.3rem;
+            margin-bottom: 15px;
+            color: var(--primary-dark);
+            display: flex;
+            align-items: center;
+        }
+
+        .tool-title i {
+            margin-right: 10px;
+        }
+
+        .tool-desc {
+            margin-bottom: 20px;
+        }
+
+        /* 页脚样式 */
+        footer {
+            background-color: var(--bg-light);
+            padding: 40px 0;
+            text-align: center;
+            margin-top: 80px;
+            border-top: 1px solid var(--border-color);
+        }
+
+        .footer-content {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .footer-links {
+            display: flex;
+            list-style: none;
+            margin: 20px 0;
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+
+        .footer-links li {
+            margin: 0 15px;
+        }
+
+        .footer-links a {
+            color: var(--text-light);
+        }
+
+        .footer-links a:hover {
+            color: var(--primary-color);
+        }
+
+        .copyright {
+            color: var(--text-light);
+            font-size: 0.9rem;
+        }
+
+        /* 响应式设计 */
+        @media (max-width: 768px) {
+            .nav-links {
+                display: none;
+            }
+
+            .menu-toggle {
+                display: flex;
+            }
+
+            .card-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .hero h1 {
+                font-size: 2rem;
+            }
+
+            .hero p {
+                font-size: 1rem;
+            }
+
+            .social-links a {
+                width: 40px;
+                height: 40px;
+                font-size: 1.2rem;
+            }
+        }
+
+        /* 主题切换按钮 */
+        .theme-switch {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            background-color: var(--primary-color);
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+            z-index: 999;
+            transition: var(--transition);
+        }
+
+        .theme-switch:hover {
+            transform: rotate(30deg);
+        }
+
+        /* 粒子效果 */
+        .particles-js-canvas-el {
+            position: fixed;
+            top: 0;
+            left: 0;
+            pointer-events: none;
+            z-index: -1;
         }
     </style>
 </head>
 <body>
     <!-- 粒子背景 -->
     <div id="particles-js"></div>
-    
-    <div class="container">
-        <!-- 导航栏 -->
-        <header>
-            <div class="nav-container">
-                <a href="https://dao3.fun/" class="dao-logo">
-                    <div class="logo-icon">
-                        <i class="fas fa-code"></i>
-                    </div>
-                    <div class="logo-text">神岛代码岛</div>
-                </a>
-                
-                <!-- 时间显示 -->
-                <div class="time-display">
-                    <span id="current-date"></span>
-                    <span id="current-time"></span>
-                </div>
-                
-                <ul class="nav-menu">
-                    <li><a href="#about">关于我</a></li>
-                    <li><a href="#projects">项目</a></li>
-                    <li><a href="#message-board">留言</a></li>
-                    <li><a href="#contact">联系我</a></li>
-                </ul>
+
+    <!-- 登录/注册模态框 -->
+    <div class="auth-modal" id="authModal">
+        <div class="auth-content">
+            <span class="close-modal" id="closeAuthModal">&times;</span>
+            <div class="auth-tabs">
+                <div class="auth-tab active" data-tab="login">登录</div>
+                <div class="auth-tab" data-tab="register">注册</div>
             </div>
-        </header>
-        
-        <!-- 主区域 -->
-        <section class="hero">
-            <!-- 左上角头像位置 -->
-            <div style="position: absolute; top: 20px; left: 20px;">
-                <div class="avatar-container">
-                    <img src="https://raw.githubusercontent.com/diqilighting-boop/Eternal2/refs/heads/main/%E5%9B%BE%E7%89%87%E9%A3%8E%E6%A0%BC%E4%BF%AE%E6%94%B9%E5%8F%8A%E7%94%9F%E6%88%90.png" alt="您的头像">
+            <form class="auth-form active" id="loginForm">
+                <div class="form-group">
+                    <label for="loginUsername">用户名</label>
+                    <input type="text" id="loginUsername" placeholder="请输入您的用户名" required>
                 </div>
-            </div>
-            
-            <h1>代码创造未来</h1>
-            <p>神岛代码岛居民 | 全栈开发者 | 技术探索者</p>
-            <div class="hero-buttons">
-                <button class="dao-button">探索项目</button>
-                <button class="dao-button">了解更多</button>
-            </div>
-        </section>
-        
-        <!-- 关于我 -->
-        <section id="about">
-            <h2 class="section-title">关于我</h2>
-            <div class="about-content">
-                <div class="about-text">
-                    <p>我是神岛代码岛的一名开发者，热爱探索编程的无限可能。我相信代码能够改变世界，创造更美好的未来。</p>
-                    <p>在神岛代码岛的旅程中，我不断学习新技术，挑战自我，与岛上的其他开发者共同成长。</p>
-                    <p>我的技术栈涵盖前端、后端和区块链开发，始终保持着对新技术的好奇心和学习的热情。</p>
+                <div class="form-group">
+                    <label for="loginPassword">密码</label>
+                    <input type="password" id="loginPassword" placeholder="请输入您的密码" required>
                 </div>
-                <div class="skills-container">
-                    <div class="skill">
-                        <div class="skill-name">
-                            <span>前端开发</span>
-                            <span>95%</span>
-                        </div>
-                        <div class="skill-bar">
-                            <div class="skill-level" style="width: 95%;"></div>
-                        </div>
-                    </div>
-                    <div class="skill">
-                        <div class="skill-name">
-                            <span>后端开发</span>
-                            <span>90%</span>
-                        </div>
-                        <div class="skill-bar">
-                            <div class="skill-level" style="width: 90%;"></div>
-                        </div>
-                    </div>
-                    <div class="skill">
-                        <div class="skill-name">
-                            <span>区块链</span>
-                            <span>85%</span>
-                        </div>
-                        <div class="skill-bar">
-                            <div class="skill-level" style="width: 85%;"></div>
-                        </div>
-                    </div>
-                    <div class="skill">
-                        <div class="skill-name">
-                            <span>UI/UX设计</span>
-                            <span>80%</span>
-                        </div>
-                        <div class="skill-bar">
-                            <div class="skill-level" style="width: 80%;"></div>
-                        </div>
-                    </div>
+                <button type="submit" class="auth-btn">登录</button>
+            </form>
+            <form class="auth-form" id="registerForm">
+                <div class="form-group">
+                    <label for="registerUsername">用户名</label>
+                    <input type="text" id="registerUsername" placeholder="请设置您的用户名" required>
                 </div>
-            </div>
-        </section>
-        
-        <!-- 项目展示 -->
-        <section id="projects">
-            <h2 class="section-title">项目展示</h2>
-            <div class="projects-grid">
-                <div class="project-card">
-                    <div class="project-img">
-                        <i class="fas fa-dragon"></i>
-                    </div>
-                    <div class="project-content">
-                        <h3 class="project-title">神岛API网关</h3>
-                        <p class="project-desc">为神岛代码岛设计的高性能API网关，支持微服务架构和分布式部署。</p>
-                        <div class="project-tech">
-                            <span class="tech-tag">Node.js</span>
-                            <span class="tech-tag">Docker</span>
-                            <span class="tech-tag">Kubernetes</span>
-                        </div>
-                    </div>
+                <div class="form-group">
+                    <label for="registerPassword">密码</label>
+                    <input type="password" id="registerPassword" placeholder="请设置您的密码" required>
                 </div>
-                
-                <div class="project-card">
-                    <div class="project-img">
-                        <i class="fas fa-shield-alt"></i>
-                    </div>
-                    <div class="project-content">
-                        <h3 class="project-title">区块链身份验证</h3>
-                        <p class="project-desc">基于区块链的去中心化身份验证系统，保护用户隐私和数据安全。</p>
-                        <div class="project-tech">
-                            <span class="tech-tag">Solidity</span>
-                            <span class="tech-tag">Web3</span>
-                            <span class="tech-tag">IPFS</span>
-                        </div>
-                    </div>
+                <div class="form-group">
+                    <label for="confirmPassword">确认密码</label>
+                    <input type="password" id="confirmPassword" placeholder="请再次输入密码" required>
                 </div>
-                
-                <div class="project-card">
-                    <div class="project-img">
-                        <i class="fas fa-robot"></i>
-                    </div>
-                    <div class="project-content">
-                        <h3 class="project-title">AI代码助手</h3>
-                        <p class="project-desc">人工智能驱动的代码编写助手，能够自动完成代码并提供优化建议。</p>
-                        <div class="project-tech">
-                            <span class="tech-tag">Python</span>
-                            <span class="tech-tag">TensorFlow</span>
-                            <span class="tech-tag">NLP</span>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </section>
-        
-        <!-- 留言板 -->
-        <section id="message-board">
-            <h2 class="section-title">留言板</h2>
-            <div class="message-board">
-                <div class="message-form">
-                    <div class="form-group">
-                        <label for="message-author">您的名称</label>
-                        <input type="text" id="message-author" class="form-control" placeholder="请输入您的名称">
-                    </div>
-                    <div class="form-group">
-                        <label for="message-content">留言内容</label>
-                        <textarea id="message-content" class="form-control" placeholder="请输入您的留言"></textarea>
-                    </div>
-                    <button id="submit-message" class="dao-button">提交留言</button>
-                </div>
-                
-                <div class="messages-container" id="messages-list">
-                    <!-- 留言将动态添加到这里 -->
-                </div>
-            </div>
-        </section>
-        
-        <!-- 页脚 -->
-        <footer id="contact">
-            <div class="social-links">
-                <a href="#" class="social-link"><i class="fab fa-github"></i></a>
-                <a href="#" class="social-link"><i class="fab fa-twitter"></i></a>
-                <a href="https://dao3.fun/profile/13485142" class="social-link"><i class="fas fa-code"></i></a>
-                <a href="#" class="social-link"><i class="fab fa-discord"></i></a>
-            </div>
-            <p class="copyright">© 2023 神岛代码岛 | <a href="https://dao3.fun/profile/13485142" style="color: var(--dao-secondary);">我的神岛主页</a></p>
-        </footer>
+                <button type="submit" class="auth-btn">注册</button>
+            </form>
+        </div>
     </div>
 
-    <!-- 粒子效果脚本 -->
+    <!-- 新建帖子模态框 -->
+    <div class="modal" id="newPostModal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 class="modal-title">新建帖子</h3>
+                <span class="modal-close" id="closePostModal">&times;</span>
+            </div>
+            <div class="modal-body">
+                <input type="text" class="post-title" placeholder="请输入帖子标题">
+                <div class="editor-toolbar">
+                    <select id="fontFamily">
+                        <option value="Arial, sans-serif">默认字体</option>
+                        <option value="'Microsoft YaHei', sans-serif">微软雅黑</option>
+                        <option value="'SimSun', serif">宋体</option>
+                        <option value="'SimHei', sans-serif">黑体</option>
+                    </select>
+                    <select id="fontSize">
+                        <option value="1em">正常大小</option>
+                        <option value="0.8em">小</option>
+                        <option value="1.2em">大</option>
+                        <option value="1.5em">更大</option>
+                    </select>
+                    <button type="button" id="boldBtn" title="加粗"><i class="fas fa-bold"></i></button>
+                    <button type="button" id="italicBtn" title="斜体"><i class="fas fa-italic"></i></button>
+                    <button type="button" id="colorBtn" title="文字颜色"><i class="fas fa-palette"></i></button>
+                    <input type="color" id="colorPicker" style="display: none;">
+                </div>
+                <textarea class="post-content" placeholder="请输入帖子内容..."></textarea>
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-outline" id="cancelPost">取消</button>
+                <button class="btn" id="submitPost">发布</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- 帖子详情模态框 -->
+    <div class="modal" id="postDetailModal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 class="modal-title" id="detailPostTitle">帖子标题</h3>
+                <span class="modal-close" id="closeDetailModal">&times;</span>
+            </div>
+            <div class="modal-body">
+                <div class="post-detail">
+                    <div class="post-header">
+                        <div class="post-author">
+                            <img src="https://via.placeholder.com/50" alt="作者头像" class="post-author-avatar">
+                            <div class="post-author-info">
+                                <h3 id="detailAuthor">作者名称</h3>
+                                <span class="post-date" id="detailDate">2023-08-31</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="post-body" id="detailContent">
+                        帖子内容将显示在这里...
+                    </div>
+                </div>
+
+                <div class="comments-section">
+                    <h3>评论</h3>
+                    <form class="comment-form" id="commentForm">
+                        <textarea class="comment-input" placeholder="请输入您的评论..." required></textarea>
+                        <button type="submit" class="btn">发表评论</button>
+                    </form>
+                    <ul class="comments-list" id="commentsList">
+                        <!-- 评论将动态添加到这里 -->
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- 导航栏 -->
+    <header>
+        <div class="container">
+            <nav>
+                <a href="#" class="logo">
+                    <i class="fas fa-code"></i>
+                    <span>TechSpace</span>
+                </a>
+                <ul class="nav-links">
+                    <li class="active"><a href="#home" data-section="home">首页</a></li>
+                    <li><a href="#forum" data-section="forum">论坛</a></li>
+                    <li><a href="#tools" data-section="tools">工具</a></li>
+                    <li><a href="#projects" data-section="projects">项目</a></li>
+                    <li><a href="#about" data-section="about">关于</a></li>
+                </ul>
+                <div class="nav-buttons">
+                    <div id="userNotLoggedIn">
+                        <button class="btn-login" id="showAuthModal">登录 / 注册</button>
+                    </div>
+                    <div id="userLoggedIn" style="display: none;">
+                        <div class="user-menu">
+                            <img src="https://via.placeholder.com/40" alt="用户头像" class="user-avatar">
+                            <span id="usernameDisplay">用户名</span>
+                            <div class="user-dropdown">
+                                <a href="#profile" data-section="profile">个人资料</a>
+                                <a href="#my-posts" data-section="my-posts">我的帖子</a>
+                                <a href="#settings" data-section="settings">设置</a>
+                                <a href="#" id="logoutBtn">退出登录</a>
+                            </div>
+                        </div>
+                    </div>
+                    <button class="menu-toggle" id="menuToggle">
+                        <span></span>
+                        <span></span>
+                        <span></span>
+                    </button>
+                </div>
+            </nav>
+        </div>
+    </header>
+
+    <!-- 下拉菜单 -->
+    <div class="dropdown-menu" id="dropdownMenu">
+        <a href="#home" data-section="home">首页</a>
+        <a href="#forum" data-section="forum">论坛</a>
+        <a href="#tools" data-section="tools">工具</a>
+        <a href="#projects" data-section="projects">项目</a>
+        <a href="#about" data-section="about">关于</a>
+    </div>
+
+    <!-- 主内容区 -->
+    <main>
+        <!-- 首页 -->
+        <section id="home" class="section active">
+            <div class="container">
+                <div class="hero">
+                    <img src="https://via.placeholder.com/150" alt="头像" class="avatar">
+                    <h1>欢迎来到 TechSpace</h1>
+                    <p>这里是分享技术、思考和创意的地方，致力于提供简洁高效的网络工具和交流平台</p>
+                    <div class="social-links">
+                        <a href="https://github.com/diqilighting-boop" target="_blank" title="GitHub">
+                            <i class="fab fa-github"></i>
+                        </a>
+                        <a href="https://space.bilibili.com/3546954254519061?spm_id_from=333.337.0.0" target="_blank" title="B站">
+                            <i class="fab fa-bilibili"></i>
+                        </a>
+                        <a href="https://dao3.fun/profile/13485142" target="_blank" title="代码">
+                            <i class="fas fa-code"></i>
+                        </a>
+                    </div>
+                </div>
+
+                <h2 class="section-title">最新内容</h2>
+
+                <div class="card-grid">
+                    <div class="card">
+                        <div class="card-header">
+                            <h3 class="card-title"><i class="fas fa-comment-dots"></i> 最新论坛话题</h3>
+                        </div>
+                        <div class="card-body">
+                            <p>网站性能优化有哪些最佳实践？欢迎大家分享经验和技巧...</p>
+                        </div>
+                        <div class="card-footer">
+                            <span><i class="fas fa-user"></i> Admin</span>
+                            <span><i class="fas fa-clock"></i> 2小时前</span>
+                        </div>
+                    </div>
+
+                    <div class="card">
+                        <div class="card-header">
+                            <h3 class="card-title"><i class="fas fa-wrench"></i> 新工具上线</h3>
+                        </div>
+                        <div class="card-body">
+                            <p>JSON格式化工具已更新，支持更多自定义选项和主题切换...</p>
+                        </div>
+                        <div class="card-footer">
+                            <span><i class="fas fa-star"></i> 推荐</span>
+                            <span><i class="fas fa-clock"></i> 1天前</span>
+                        </div>
+                    </div>
+
+                    <div class="card">
+                        <div class="card-header">
+                            <h3 class="card-title"><i class="fas fa-lightbulb"></i> 项目更新</h3>
+                        </div>
+                        <div class="card-body">
+                            <p>个人博客系统重构完成，采用Vue3 + Express实现，性能提升显著...</p>
+                        </div>
+                        <div class="card-footer">
+                            <span><i class="fas fa-code"></i> Vue</span>
+                            <span><i class="fas fa-clock"></i> 3天前</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- 论坛 -->
+        <section id="forum" class="section">
+            <div class="container">
+                <h2 class="section-title">技术论坛</h2>
+                <p style="text-align: center; margin-bottom: 30px;">欢迎来到技术交流论坛，在这里可以讨论Web开发、编程技术和创意想法</p>
+
+                <div class="forum-actions">
+                    <button class="btn" id="newPostBtn"><i class="fas fa-plus"></i> 新建帖子</button>
+                </div>
+
+                <div class="card">
+                    <div class="card-header">
+                        <h3 class="card-title"><i class="fas fa-comments"></i> 话题列表</h3>
+                    </div>
+                    <div class="card-body" style="padding: 0;">
+                        <ul class="forum-list" id="forumList">
+                            <!-- 帖子将动态添加到这里 -->
+                            <li class="forum-item" style="text-align: center; padding: 40px; color: var(--text-light);">
+                                <i class="fas fa-comment-slash" style="font-size: 2rem; margin-bottom: 15px;"></i>
+                                <p>暂无帖子，成为第一个发帖的人吧！</p>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- 工具 -->
+        <section id="tools" class="section">
+            <div class="container">
+                <h2 class="section-title">实用工具</h2>
+                <p style="text-align: center; margin-bottom: 30px;">收集了一系列实用的在线工具，帮助提高开发效率和解决问题</p>
+
+                <div class="card-grid">
+                    <div class="card">
+                        <div class="card-header">
+                            <h3 class="card-title"><i class="fas fa-code"></i> JSON格式化</h3>
+                        </div>
+                        <div class="card-body">
+                            <p>快速格式化、验证和压缩JSON数据，支持语法高亮和错误提示。</p>
+                        </div>
+                        <div class="card-footer">
+                            <a href="#" class="btn">使用工具</a>
+                            <span><i class="fas fa-star"></i> 常用</span>
+                        </div>
+                    </div>
+
+                    <div class="card">
+                        <div class="card-header">
+                            <h3 class="card-title"><i class="fas fa-hashtag"></i> Base64编码解码</h3>
+                        </div>
+                        <div class="card-body">
+                            <p>快速对文本进行Base64编码和解码操作，支持字符串和文件转换。</p>
+                        </div>
+                        <div class="card-footer">
+                            <a href="#" class="btn">使用工具</a>
+                            <span><i class="fas fa-clock"></i> 更新</span>
+                        </div>
+                    </div>
+
+                    <div class="card">
+                        <div class="card-header">
+                            <h3 class="card-title"><i class="fas fa-palette"></i> 颜色选择器</h3>
+                        </div>
+                        <div class="card-body">
+                            <p>提供多种格式的颜色值选择与转换，支持调色板保存和分享功能。</p>
+                        </div>
+                        <div class="card-footer">
+                            <a href="#" class="btn">使用工具</a>
+                            <span><i class="fas fa-heart"></i> 设计</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- 项目 -->
+        <section id="projects" class="section">
+            <div class="container">
+                <h2 class="section-title">我的项目</h2>
+                <p style="text-align: center; margin-bottom: 30px;">展示个人开发的项目和作品，包括开源项目和实践案例</p>
+
+                <div class="card-grid">
+                    <div class="card">
+                        <div class="card-header">
+                            <h3 class="card-title"><i class="fas fa-blog"></i> 个人博客系统</h3>
+                        </div>
+                        <div class="card-body">
+                            <p>基于Vue3和Express开发的个人博客系统，支持Markdown写作和响应式设计。</p>
+                        </div>
+                        <div class="card-footer">
+                            <a href="#" class="btn">查看详情</a>
+                            <span><i class="fab fa-github"></i> Vue</span>
+                        </div>
+                    </div>
+
+                    <div class="card">
+                        <div class="card-header">
+                            <h3 class="card-title"><i class="fas fa-comments"></i> 简约论坛程序</h3>
+                        </div>
+                        <div class="card-body">
+                            <p>轻量级论坛系统，专注于简洁的界面和流畅的用户体验。</p>
+                        </div>
+                        <div class="card-footer">
+                            <a href="#" class="btn">查看详情</a>
+                            <span><i class="fab fa-php"></i> PHP</span>
+                        </div>
+                    </div>
+
+                    <div class="card">
+                        <div class="card-header">
+                            <h3 class="card-title"><i class="fas fa-toolbox"></i> 在线工具集合</h3>
+                        </div>
+                        <div class="card-body">
+                            <p>收集了大量实用在线工具，涵盖开发、设计和日常办公需求。</p>
+                        </div>
+                        <div class="card-footer">
+                            <a href="#" class="btn">查看详情</a>
+                            <span><i class="fas fa-box"></i> 工具</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- 关于 -->
+        <section id="about" class="section">
+            <div class="container">
+                <h2 class="section-title">关于本站</h2>
+                
+                <div class="card">
+                    <div class="card-header">
+                        <h3 class="card-title"><i class="fas fa-info-circle"></i> 网站信息</h3>
+                    </div>
+                    <div class="card-body">
+                        <p>本站是一个个人技术博客和工具平台，创建于2023年，致力于分享Web开发技术和实用工具。</p>
+                        <p>网站采用纯前端实现，使用原生JavaScript和CSS构建，具有轻量级、快速加载的特点。</p>
+                        <p>青色主题设计旨在营造清新、专注的浏览体验，减少视觉疲劳。</p>
+                        
+                        <h4 style="margin: 20px 0 10px; color: var(--primary-dark);">技术栈</h4>
+                        <ul style="padding-left: 20px;">
+                            <li>前端: HTML5, CSS3, JavaScript</li>
+                            <li>图标: Font Awesome</li>
+                            <li>响应式设计: 移动优先</li>
+                            <li>颜色系统: CSS变量支持明暗主题</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="card" style="margin-top: 30px;">
+                    <div class="card-header">
+                        <h3 class="card-title"><i class="fas fa-shield-alt"></i> 隐私政策</h3>
+                    </div>
+                    <div class="card-body">
+                        <p>我们非常重视您的隐私权。本政策说明了我们会收集哪些信息以及如何使用这些信息。</p>
+                        
+                        <h4 style="margin: 20px 0 10px; color: var(--primary-dark);">收集的信息</h4>
+                        <p>当您注册账户时，我们会收集您提供的用户名和密码。</p>
+                        
+                        <h4 style="margin: 20px 0 10px; color: var(--primary-dark);">信息的使用</h4>
+                        <p>我们使用收集的信息来提供、维护和改进我们的服务，以及开发新的服务。</p>
+                    </div>
+                </div>
+
+                <div class="card" style="margin-top: 30px;">
+                    <div class="card-header">
+                        <h3 class="card-title"><i class="fas fa-file-contract"></i> 使用条款</h3>
+                    </div>
+                    <div class="card-body">
+                        <p>请在使用本网站前仔细阅读以下使用条款。</p>
+                        
+                        <h4 style="margin: 20px 0 10px; color: var(--primary-dark);">用户行为</h4>
+                        <p>您同意不会使用本服务进行任何非法活动或传播非法内容。</p>
+                        
+                        <h4 style="margin: 20px 0 10px; color: var(--primary-dark);">内容责任</h4>
+                        <p>您应对您发布的内容负责，我们不对用户发布的内容承担任何责任。</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- 页脚 -->
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <a href="#" class="logo" style="margin-bottom: 20px;">
+                    <i class="fas fa-code"></i>
+                    <span>TechSpace</span>
+                </a>
+                
+                <ul class="footer-links">
+                    <li><a href="#home">首页</a></li>
+                    <li><a href="#forum">论坛</a></li>
+                    <li><a href="#tools">工具</a></li>
+                    <li><a href="#projects">项目</a></li>
+                    <li><a href="#about">关于</a></li>
+                    <li><a href="#privacy">隐私政策</a></li>
+                    <li><a href="#terms">使用条款</a></li>
+                </ul>
+                
+                <p class="copyright">© 2023 TechSpace - 技术交流与工具平台. 保留所有权利.</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- 主题切换按钮 -->
+    <div class="theme-switch">
+        <i class="fas fa-brush"></i>
+    </div>
+
+    <!-- 引入粒子效果库 -->
     <script src="https://cdn.jsdelivr.net/particles.js/2.0.0/particles.min.js"></script>
     
     <script>
-        // 初始化粒子效果
+        // 用户状态管理
+        let currentUser = null;
+        let posts = JSON.parse(localStorage.getItem('forumPosts')) || [];
+        let users = JSON.parse(localStorage.getItem('forumUsers')) || [];
+
+        // DOM加载完成后执行
         document.addEventListener('DOMContentLoaded', function() {
+            // 初始化粒子效果
             particlesJS('particles-js', {
                 particles: {
-                    number: { value: 80, density: { enable: true, value_area: 800 } },
-                    color: { value: "#6e45e2" },
-                    shape: { 
-                        type: "polygon",
-                        polygon: { nb_sides: 6 }
-                    },
-                    opacity: {
-                        value: 0.5,
-                        random: true,
-                        anim: { enable: true, speed: 1, opacity_min: 0.1, sync: false }
-                    },
-                    size: {
-                        value: 3,
-                        random: true,
-                        anim: { enable: true, speed: 2, size_min: 0.1, sync: false }
-                    },
-                    line_linked: {
-                        enable: true,
-                        distance: 150,
-                        color: "#6e45e2",
-                        opacity: 0.4,
-                        width: 1
-                    },
-                    move: {
-                        enable: true,
-                        speed: 2,
-                        direction: "none",
-                        random: true,
-                        straight: false,
-                        out_mode: "out",
-                        bounce: false,
-                        attract: { enable: false, rotateX: 600, rotateY: 1200 }
+                    number: { value: 30, density: { enable: true, value_area: 800 } },
+                    color: { value: "#00B4B3" },
+                    shape: { type: "circle" },
+                    opacity: { value: 0.5, random: true },
+                    size: { value: 3, random: true },
+                    line_linked: { enable: false },
+                    move: { 
+                        enable: true, 
+                        speed: 1, 
+                        direction: "none", 
+                        random: true, 
+                        out_mode: "out" 
                     }
                 },
                 interactivity: {
                     detect_on: "canvas",
                     events: {
-                        onhover: { enable: true, mode: "grab" },
-                        onclick: { enable: true, mode: "push" },
-                        resize: true
+                        onhover: { enable: true, mode: "bubble" },
+                        onclick: { enable: true, mode: "repulse" }
                     },
                     modes: {
-                        grab: { distance: 140, line_linked: { opacity: 1 } },
-                        push: { particles_nb: 4 },
+                        bubble: { distance: 100, size: 5, duration: 2, opacity: 0.8 },
+                        repulse: { distance: 100, duration: 0.4 }
                     }
-                },
-                retina_detect: true
+                }
+            });
+
+            // 初始化页面
+            initApp();
+
+            // 初始化事件监听
+            initEventListeners();
+
+            // 渲染帖子列表
+            renderPosts();
+        });
+
+        // 初始化应用
+        function initApp() {
+            // 检查用户登录状态
+            const savedUser = localStorage.getItem('currentUser');
+            if (savedUser) {
+                currentUser = JSON.parse(savedUser);
+                updateUserInterface();
+            }
+        }
+
+        // 初始化事件监听器
+        function initEventListeners() {
+            // 导航菜单切换
+            const menuToggle = document.getElementById('menuToggle');
+            const dropdownMenu = document.getElementById('dropdownMenu');
+            
+            menuToggle.addEventListener('click', function() {
+                dropdownMenu.classList.toggle('active');
+                menuToggle.classList.toggle('active');
             });
             
-            // 更新当前时间
-            function updateTime() {
-                const now = new Date();
-                const dateStr = now.toLocaleDateString('zh-CN', { 
-                    year: 'numeric', 
-                    month: '2-digit', 
-                    day: '2-digit',
-                    weekday: 'short'
+            // 部分切换逻辑
+            const sections = document.querySelectorAll('.section');
+            const navItems = document.querySelectorAll('.nav-links li');
+            
+            // 导航链接点击事件
+            document.querySelectorAll('.nav-links a, .dropdown-menu a').forEach(link => {
+                link.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    const sectionId = this.getAttribute('data-section');
+                    
+                    // 更新导航活动状态
+                    navItems.forEach(item => item.classList.remove('active'));
+                    if (this.parentElement.classList.contains('nav-links')) {
+                        this.parentElement.classList.add('active');
+                    }
+                    
+                    // 显示对应部分
+                    showSection(sectionId);
+                    
+                    // 在移动设备上点击后关闭菜单
+                    if (dropdownMenu.classList.contains('active')) {
+                        dropdownMenu.classList.remove('active');
+                        menuToggle.classList.remove('active');
+                    }
                 });
-                const timeStr = now.toLocaleTimeString('zh-CN', {
-                    hour: '2-digit',
-                    minute: '2-digit',
-                    second: '2-digit'
+            });
+            
+            // 显示指定部分函数
+            function showSection(sectionId) {
+                sections.forEach(section => {
+                    section.classList.remove('active');
                 });
+                document.getElementById(sectionId).classList.add('active');
                 
-                document.getElementById('current-date').textContent = dateStr + ' ';
-                document.getElementById('current-time').textContent = timeStr;
+                // 滚动到顶部
+                window.scrollTo(0, 0);
             }
             
-            // 初始更新时间
-            updateTime();
-            // 每秒更新一次时间
-            setInterval(updateTime, 1000);
+            // 明暗主题切换
+            const themeSwitch = document.querySelector('.theme-switch');
+            themeSwitch.addEventListener('click', function() {
+                const isDark = document.documentElement.getAttribute('style').includes('dark');
+                
+                if (isDark) {
+                    document.documentElement.setAttribute('style', '');
+                    themeSwitch.innerHTML = '<i class="fas fa-brush"></i>';
+                } else {
+                    document.documentElement.setAttribute('style', '--text-color: #EEEEEE; --text-light: #AAAAAA; --bg-color: #1A1A1A; --bg-light: #252525; --border-color: #334444;');
+                    themeSwitch.innerHTML = '<i class="fas fa-sun"></i>';
+                }
+            });
             
-            // 留言功能
-            const messageForm = document.getElementById('submit-message');
-            const messagesList = document.getElementById('messages-list');
+            // 用户菜单显示/隐藏
+            const userMenu = document.querySelector('.user-menu');
+            const userDropdown = document.querySelector('.user-dropdown');
             
-            // 加载留言
-            function loadMessages() {
-                const messages = JSON.parse(localStorage.getItem('dao-messages')) || [];
-                const now = new Date();
-                const fiftyDaysAgo = new Date(now.getTime() - 50 * 24 * 60 * 60 * 1000);
-                
-                // 过滤掉50天前的留言
-                const recentMessages = messages.filter(msg => new Date(msg.date) > fiftyDaysAgo);
-                
-                // 更新本地存储
-                localStorage.setItem('dao-messages', JSON.stringify(recentMessages));
-                
-                // 清空留言列表
-                messagesList.innerHTML = '';
-                
-                // 添加留言到列表
-                recentMessages.forEach(msg => {
-                    addMessageToDOM(msg.author, msg.content, msg.date);
+            if (userMenu) {
+                userMenu.addEventListener('click', function() {
+                    userDropdown.classList.toggle('active');
                 });
             }
             
-            // 添加留言到DOM
-            function addMessageToDOM(author, content, date) {
-                const messageEl = document.createElement('div');
-                messageEl.className = 'message';
-                
-                const messageDate = new Date(date);
-                const formattedDate = messageDate.toLocaleDateString('zh-CN', {
-                    year: 'numeric',
-                    month: '2-digit',
-                    day: '2-digit',
-                    hour: '2-digit',
-                    minute: '2-digit'
-                });
-                
-                messageEl.innerHTML = `
-                    <div class="message-header">
-                        <span class="message-author">${author}</span>
-                        <span class="message-date">${formattedDate}</span>
-                    </div>
-                    <div class="message-content">${content}</div>
-                `;
-                
-                messagesList.prepend(messageEl);
-            }
+            // 登录/注册模态框
+            const authModal = document.getElementById('authModal');
+            const showAuthModalBtn = document.getElementById('showAuthModal');
+            const closeAuthModalBtn = document.getElementById('closeAuthModal');
+            const authTabs = document.querySelectorAll('.auth-tab');
+            const authForms = document.querySelectorAll('.auth-form');
             
-            // 提交留言
-            messageForm.addEventListener('click', function() {
-                const authorInput = document.getElementById('message-author');
-                const contentInput = document.getElementById('message-content');
+            showAuthModalBtn.addEventListener('click', function() {
+                authModal.style.display = 'flex';
+            });
+            
+            closeAuthModalBtn.addEventListener('click', function() {
+                authModal.style.display = 'none';
+            });
+            
+            authTabs.forEach(tab => {
+                tab.addEventListener('click', function() {
+                    const tabId = this.getAttribute('data-tab');
+                    
+                    authTabs.forEach(t => t.classList.remove('active'));
+                    authForms.forEach(f => f.classList.remove('active'));
+                    
+                    this.classList.add('active');
+                    document.getElementById(tabId + 'Form').classList.add('active');
+                });
+            });
+            
+            // 登录表单提交
+            const loginForm = document.getElementById('loginForm');
+            loginForm.addEventListener('submit', function(e) {
+                e.preventDefault();
+                const username = document.getElementById('loginUsername').value;
+                const password = document.getElementById('loginPassword').value;
                 
-                const author = authorInput.value.trim();
-                const content = contentInput.value.trim();
+                loginUser(username, password);
+            });
+            
+            // 注册表单提交
+            const registerForm = document.getElementById('registerForm');
+            registerForm.addEventListener('submit', function(e) {
+                e.preventDefault();
+                const username = document.getElementById('registerUsername').value;
+                const password = document.getElementById('registerPassword').value;
+                const confirmPassword = document.getElementById('confirmPassword').value;
                 
-                if (!author || !content) {
-                    alert('请填写名称和留言内容');
+                if (password !== confirmPassword) {
+                    alert('密码不一致，请重新输入');
                     return;
                 }
                 
-                // 创建新留言
-                const newMessage = {
-                    author: author,
-                    content: content,
+                registerUser(username, password);
+            });
+            
+            // 退出登录
+            const logoutBtn = document.getElementById('logoutBtn');
+            logoutBtn.addEventListener('click', function(e) {
+                e.preventDefault();
+                logoutUser();
+            });
+            
+            // 新建帖子按钮
+            const newPostBtn = document.getElementById('newPostBtn');
+            newPostBtn.addEventListener('click', function() {
+                if (!currentUser) {
+                    alert('请先登录再发布帖子');
+                    authModal.style.display = 'flex';
+                    return;
+                }
+                
+                showNewPostModal();
+            });
+            
+            // 帖子模态框关闭
+            const closePostModal = document.getElementById('closePostModal');
+            const cancelPost = document.getElementById('cancelPost');
+            const submitPost = document.getElementById('submitPost');
+            
+            closePostModal.addEventListener('click', hideNewPostModal);
+            cancelPost.addEventListener('click', hideNewPostModal);
+            
+            // 提交帖子
+            submitPost.addEventListener('click', function() {
+                const title = document.querySelector('.post-title').value;
+                const content = document.querySelector('.post-content').value;
+                
+                if (!title || !content) {
+                    alert('标题和内容不能为空');
+                    return;
+                }
+                
+                createNewPost(title, content);
+            });
+            
+            // 编辑器工具栏功能
+            const boldBtn = document.getElementById('boldBtn');
+            const italicBtn = document.getElementById('italicBtn');
+            const colorBtn = document.getElementById('colorBtn');
+            const colorPicker = document.getElementById('colorPicker');
+            const fontFamily = document.getElementById('fontFamily');
+            const fontSize = document.getElementById('fontSize');
+            const postContent = document.querySelector('.post-content');
+            
+            boldBtn.addEventListener('click', function() {
+                document.execCommand('bold', false, null);
+                postContent.focus();
+            });
+            
+            italicBtn.addEventListener('click', function() {
+                document.execCommand('italic', false, null);
+                postContent.focus();
+            });
+            
+            colorBtn.addEventListener('click', function() {
+                colorPicker.click();
+            });
+            
+            colorPicker.addEventListener('input', function() {
+                document.execCommand('foreColor', false, this.value);
+                postContent.focus();
+            });
+            
+            fontFamily.addEventListener('change', function() {
+                document.execCommand('fontName', false, this.value);
+                postContent.focus();
+            });
+            
+            fontSize.addEventListener('change', function() {
+                document.execCommand('fontSize', false, this.value);
+                postContent.focus();
+            });
+            
+            // 点击页面其他地方关闭下拉菜单
+            document.addEventListener('click', function(e) {
+                if (!e.target.closest('.user-menu') && userDropdown.classList.contains('active')) {
+                    userDropdown.classList.remove('active');
+                }
+                
+                if (!e.target.closest('.menu-toggle') && !e.target.closest('.dropdown-menu') && dropdownMenu.classList.contains('active')) {
+                    dropdownMenu.classList.remove('active');
+                    menuToggle.classList.remove('active');
+                }
+            });
+            
+            // 点击页面添加粒子效果
+            document.addEventListener('click', function(e) {
+                createParticles(e.clientX, e.clientY);
+            });
+        }
+
+        // 用户登录
+        function loginUser(username, password) {
+            const user = users.find(u => u.username === username && u.password === password);
+            
+            if (user) {
+                currentUser = user;
+                localStorage.setItem('currentUser', JSON.stringify(currentUser));
+                updateUserInterface();
+                document.getElementById('authModal').style.display = 'none';
+                alert('登录成功！');
+            } else {
+                alert('用户名或密码错误');
+            }
+        }
+
+        // 用户注册
+        function registerUser(username, password) {
+            // 检查用户是否已存在
+            if (users.find(u => u.username === username)) {
+                alert('用户名已存在');
+                return;
+            }
+            
+            const newUser = {
+                id: Date.now().toString(),
+                username,
+                password,
+                joined: new Date().toISOString()
+            };
+            
+            users.push(newUser);
+            localStorage.setItem('forumUsers', JSON.stringify(users));
+            
+            currentUser = newUser;
+            localStorage.setItem('currentUser', JSON.stringify(currentUser));
+            updateUserInterface();
+            document.getElementById('authModal').style.display = 'none';
+            alert('注册成功！');
+        }
+
+        // 用户退出登录
+        function logoutUser() {
+            currentUser = null;
+            localStorage.removeItem('currentUser');
+            updateUserInterface();
+            alert('已退出登录');
+        }
+
+        // 更新用户界面
+        function updateUserInterface() {
+            const userNotLoggedIn = document.getElementById('userNotLoggedIn');
+            const userLoggedIn = document.getElementById('userLoggedIn');
+            const usernameDisplay = document.getElementById('usernameDisplay');
+            
+            if (currentUser) {
+                userNotLoggedIn.style.display = 'none';
+                userLoggedIn.style.display = 'flex';
+                usernameDisplay.textContent = currentUser.username;
+            } else {
+                userNotLoggedIn.style.display = 'block';
+                userLoggedIn.style.display = 'none';
+            }
+        }
+
+        // 显示新建帖子模态框
+        function showNewPostModal() {
+            document.getElementById('newPostModal').classList.add('active');
+        }
+
+        // 隐藏新建帖子模态框
+        function hideNewPostModal() {
+            document.getElementById('newPostModal').classList.remove('active');
+            document.querySelector('.post-title').value = '';
+            document.querySelector('.post-content').value = '';
+        }
+
+        // 创建新帖子
+        function createNewPost(title, content) {
+            const newPost = {
+                id: Date.now().toString(),
+                title,
+                content,
+                author: currentUser.username,
+                authorId: currentUser.id,
+                date: new Date().toISOString(),
+                comments: []
+            };
+            
+            posts.push(newPost);
+            localStorage.setItem('forumPosts', JSON.stringify(posts));
+            
+            renderPosts();
+            hideNewPostModal();
+            alert('帖子发布成功！');
+        }
+
+        // 渲染帖子列表
+        function renderPosts() {
+            const forumList = document.getElementById('forumList');
+            
+            if (posts.length === 0) {
+                forumList.innerHTML = `
+                    <li class="forum-item" style="text-align: center; padding: 40px; color: var(--text-light);">
+                        <i class="fas fa-comment-slash" style="font-size: 2rem; margin-bottom: 15px;"></i>
+                        <p>暂无帖子，成为第一个发帖的人吧！</p>
+                    </li>
+                `;
+                return;
+            }
+            
+            forumList.innerHTML = posts.map(post => `
+                <li class="forum-item" data-id="${post.id}">
+                    <h4 class="forum-title">${post.title}</h4>
+                    <div class="forum-meta">
+                        <span><i class="fas fa-user"></i> ${post.author}</span>
+                        <span><i class="fas fa-clock"></i> ${formatDate(post.date)}</span>
+                        <span><i class="fas fa-comment"></i> ${post.comments.length} 条评论</span>
+                    </div>
+                </li>
+            `).join('');
+            
+            // 添加帖子点击事件
+            document.querySelectorAll('.forum-item').forEach(item => {
+                item.addEventListener('click', function() {
+                    const postId = this.getAttribute('data-id');
+                    const post = posts.find(p => p.id === postId);
+                    showPostDetail(post);
+                });
+            });
+        }
+
+        // 显示帖子详情
+        function showPostDetail(post) {
+            if (!currentUser) {
+                alert('请先登录查看帖子内容');
+                document.getElementById('authModal').style.display = 'flex';
+                return;
+            }
+            
+            document.getElementById('detailPostTitle').textContent = post.title;
+            document.getElementById('detailAuthor').textContent = post.author;
+            document.getElementById('detailDate').textContent = formatDate(post.date);
+            document.getElementById('detailContent').innerHTML = post.content;
+            
+            // 渲染评论
+            const commentsList = document.getElementById('commentsList');
+            commentsList.innerHTML = post.comments.length === 0 ? 
+                '<p style="text-align: center; padding: 20px; color: var(--text-light);">暂无评论</p>' :
+                post.comments.map(comment => `
+                    <li class="comment-item">
+                        <div class="comment-header">
+                            <img src="https://via.placeholder.com/40" alt="评论者头像" class="comment-avatar">
+                            <span class="comment-author">${comment.author}</span>
+                            <span class="comment-date">${formatDate(comment.date)}</span>
+                        </div>
+                        <div class="comment-body">${comment.content}</div>
+                    </li>
+                `).join('');
+            
+            // 显示详情模态框
+            document.getElementById('postDetailModal').classList.add('active');
+            
+            // 评论表单提交
+            const commentForm = document.getElementById('commentForm');
+            commentForm.onsubmit = function(e) {
+                e.preventDefault();
+                const content = document.querySelector('.comment-input').value;
+                
+                if (!content) {
+                    alert('评论内容不能为空');
+                    return;
+                }
+                
+                const newComment = {
+                    id: Date.now().toString(),
+                    content,
+                    author: currentUser.username,
+                    authorId: currentUser.id,
                     date: new Date().toISOString()
                 };
                 
-                // 获取现有留言
-                const messages = JSON.parse(localStorage.getItem('dao-messages')) || [];
+                post.comments.push(newComment);
+                localStorage.setItem('forumPosts', JSON.stringify(posts));
                 
-                // 添加新留言
-                messages.push(newMessage);
+                // 更新评论列表
+                commentsList.innerHTML = post.comments.map(comment => `
+                    <li class="comment-item">
+                        <div class="comment-header">
+                            <img src="https://via.placeholder.com/40" alt="评论者头像" class="comment-avatar">
+                            <span class="comment-author">${comment.author}</span>
+                            <span class="comment-date">${formatDate(comment.date)}</span>
+                        </div>
+                        <div class="comment-body">${comment.content}</div>
+                    </li>
+                `).join('');
                 
-                // 保存到本地存储
-                localStorage.setItem('dao-messages', JSON.stringify(messages));
-                
-                // 添加到DOM
-                addMessageToDOM(newMessage.author, newMessage.content, newMessage.date);
-                
-                // 清空输入框
-                authorInput.value = '';
-                contentInput.value = '';
-            });
+                document.querySelector('.comment-input').value = '';
+                alert('评论发表成功！');
+            };
             
-            // 初始加载留言
-            loadMessages();
-        });
+            // 关闭详情模态框
+            const closeDetailModal = document.getElementById('closeDetailModal');
+            closeDetailModal.onclick = function() {
+                document.getElementById('postDetailModal').classList.remove('active');
+            };
+        }
+
+        // 创建粒子效果
+        function createParticles(x, y) {
+            const particles = document.getElementById('particles-js');
+            const particle = document.createElement('div');
+            particle.className = 'particle';
+            particle.style = `
+                position: fixed;
+                width: 5px;
+                height: 5px;
+                background-color: var(--primary-color);
+                border-radius: 50%;
+                pointer-events: none;
+                z-index: 9999;
+                left: ${x}px;
+                top: ${y}px;
+            `;
+            document.body.appendChild(particle);
+            
+            // 粒子动画
+            let size = 5;
+            let opacity = 1;
+            let posX = x;
+            let posY = y;
+            
+            const animate = setInterval(() => {
+                size += 1;
+                opacity -= 0.05;
+                posX += (Math.random() - 0.5) * 10;
+                posY += (Math.random() - 0.5) * 10;
+                
+                particle.style.width = `${size}px`;
+                particle.style.height = `${size}px`;
+                particle.style.opacity = opacity;
+                particle.style.left = `${posX}px`;
+                particle.style.top = `${posY}px`;
+                
+                if (opacity <= 0) {
+                    clearInterval(animate);
+                    particle.remove();
+                }
+            }, 30);
+        }
+
+        // 格式化日期
+        function formatDate(dateString) {
+            const date = new Date(dateString);
+            return `${date.getFullYear()}-${(date.getMonth() + 1).toString().padStart(2, '0')}-${date.getDate().toString().padStart(2, '0')} ${date.getHours().toString().padStart(2, '0')}:${date.getMinutes().toString().padStart(2, '0')}`;
+        }
     </script>
 </body>
 </html>
